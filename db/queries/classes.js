@@ -39,3 +39,15 @@ export async function getClassesByClassName(className) {
     rows: [classes],
   } = await db.query(sql, [className]);
 }
+
+export async function getClassesByReservations(id) {
+  const sql = `
+    SELECT classes.*
+    FROM
+    classes
+    JOIN reservations ON classes.id = reservations.classes_id
+    WHERE reservations.classes_id = $1
+    `;
+  const { rows: classes } = await db.query(sql, [id]);
+  return classes;
+}
