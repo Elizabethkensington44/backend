@@ -1,44 +1,34 @@
-import db from "#db/client";
+import { createClass } from "#db/queries/classes";
+import { createTeacher } from "#db/queries/teachers";
 import { createUser } from "#db/queries/users";
 
-await db.connect();
-await seed();
-await db.end();
-console.log("🌱 Database seeded.");
-
-/*async function seed() {
-  await createUser("foo", "bar");
-}*/
+/** Inserts sample users, teachers, and classes. */
+export async function seed() {
+  await seedUsers();
+  await seedTeachers();
+  await seedClasses();
+}
 
 async function seedUsers() {
   for (let i = 0; i < 15; i++) {
-    const users = {
-      userName: "name" + i,
-      password: "hashedPassword",
-    };
-    await createUser(users);
+    await createUser(`user${i}`, "password123");
   }
 }
 
 async function seedTeachers() {
   for (let i = 0; i < 10; i++) {
-    const teachers = {
-      teacherName: "name" + 1,
-      danceStyle: "description",
-      bio: "description",
-    };
-    await createTeachers(teachers);
+    await createTeacher(`Teacher ${i}`, "Contemporary", "Bio coming soon.");
   }
 }
 
 async function seedClasses() {
   for (let i = 0; i < 20; i++) {
-    const classes = {
-      className: "name" + i,
-      classDescription: "description",
-      classDate: "2026-11-11",
-      classPrice: Math.floor(Math.random()),
-    };
-    await createClasses(classes);
+    await createClass(
+      `Class ${i}`,
+      `Teacher ${i % 10}`,
+      "Description coming soon.",
+      "2026-11-11",
+      (i + 1) * 5,
+    );
   }
 }

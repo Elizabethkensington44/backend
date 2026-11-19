@@ -24,5 +24,7 @@ CREATE TABLE classes (
 
 CREATE TABLE reservations (
   id serial PRIMARY KEY,
-class_id integer NOT NULL REFERENCES classes(id) ON DELETE CASCADE
+  user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  class_id integer NOT NULL REFERENCES classes(id) ON DELETE CASCADE,
+  UNIQUE (user_id, class_id)
 );

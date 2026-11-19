@@ -1,12 +1,19 @@
 import express from "express";
+
+import { getTeacherById, getTeachers } from "#db/queries/teachers";
+
 const router = express.Router();
-export default router;
-
-import { createTeachers } from "#db/queries/teachers";
-
-router.use(requireuser);
 
 router.get("/", async (req, res) => {
-  const teachers = await getTeachers(req.user.id);
+  const teachers = await getTeachers();
   res.send(teachers);
 });
+
+router.get("/:id", async (req, res) => {
+  const teacher = await getTeacherById(req.params.id);
+  if (!teacher) return res.status(404).send("Teacher not found");
+
+  res.send(teacher);
+});
+
+export default router;

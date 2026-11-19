@@ -1,53 +1,49 @@
 import db from "#db/client";
 
-export async function createClasses(
+export async function createClass(
   className,
+  classTeacher,
   classDescription,
   classDate,
   classPrice,
 ) {
   const sql = `
     INSERT INTO classes
-    (className, classDescription, classDate, classPrice)
+      (class_name, class_teacher, class_description, class_date, class_price)
     VALUES
-    ($1, $2, $3, $4)
+      ($1, $2, $3, $4, $5)
     RETURNING *
-    `;
+  `;
   const {
-    rows: [classes],
-  } = await db.query(sql, [className, classDescription, classDate, classPrice]);
-  return classes;
+    rows: [createdClass],
+  } = await db.query(sql, [
+    className,
+    classTeacher,
+    classDescription,
+    classDate,
+    classPrice,
+  ]);
+  return createdClass;
 }
 
-export async function getClassesByUserId(id) {
+export async function getClasses() {
   const sql = `
     SELECT *
     FROM classes
-    WHERE user_id =$1
-    `;
-  const { rows: classes } = await db.query(sql[id]);
+    ORDER BY class_date, id
+  `;
+  const { rows: classes } = await db.query(sql);
   return classes;
 }
 
-export async function getClassesByClassName(className) {
+export async function getClassById(id) {
   const sql = `
-    SELECT classes.*
+    SELECT *
     FROM classes
-    WHERE className = $1
-    `;
+    WHERE id = $1
+  `;
   const {
-    rows: [classes],
-  } = await db.query(sql, [className]);
-}
-
-export async function getClassesByReservations(id) {
-  const sql = `
-    SELECT classes.*
-    FROM
-    classes
-    JOIN reservations ON classes.id = reservations.classes_id
-    WHERE reservations.classes_id = $1
-    `;
-  const { rows: classes } = await db.query(sql, [id]);
-  return classes;
+    rows: [foundClass],
+  } = await db.query(sql, [id]);
+  return foundClass;
 }
