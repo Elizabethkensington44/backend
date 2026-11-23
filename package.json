@@ -9,6 +9,7 @@
     "dev": "node --watch --env-file=.env server.js",
     "test": "vitest",
     "db:schema": "psql -d dancer -f db/schema.sql",
+    "db:migrate": "node --env-file=.env db/migrate.js",
     "db:seed": "node --env-file=.env db/seed.js",
     "db:reset": "node --env-file=.env db/reset.js"
   },
