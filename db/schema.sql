@@ -3,7 +3,10 @@ DROP TABLE IF EXISTS reservations, classes, teachers, users;
 CREATE TABLE users (
   id serial PRIMARY KEY,
   username text NOT NULL UNIQUE,
-  password text NOT NULL
+  password text NOT NULL,
+  full_name text NOT NULL,
+  email text NOT NULL UNIQUE,
+  created_at timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE TABLE teachers (

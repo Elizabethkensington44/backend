@@ -11,7 +11,7 @@ export async function seed() {
 
 async function seedUsers() {
   for (let i = 0; i < 15; i++) {
-    await createUser(`user${i}`, "password123");
+    await createUser(`user${i}`, "password123", `User ${i}`, `user${i}@example.com`);
   }
 }
 

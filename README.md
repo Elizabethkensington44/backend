@@ -22,6 +22,7 @@ Express + PostgreSQL backend for the Dance Studio capstone app.
 | --- | --- | --- |
 | POST | `/users/register` | Create a user and return a token |
 | POST | `/users/login` | Log in and return a token |
+| GET | `/users/me` | Get the current user's profile (auth) |
 | GET | `/classes` | List all classes |
 | GET | `/classes/:id` | Get one class |
 | GET | `/classes/:id/reservations` | List reservations for a class (auth) |
